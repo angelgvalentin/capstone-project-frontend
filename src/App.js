@@ -5,11 +5,15 @@ import AddGrocery from "./components/AddGrocery/AddGrocery";
 import EditGrocery from "./components/EditGrocery/EditGrocery";
 
 function App() {
+    //Hooks
     const [allGroceries, setAllGroceries] = useState([]);
     const [selectedGrocery, setSelectedGrocery] = useState(null);
     const [showAddGroceryForm, setShowAddGroceryForm] = useState(false);
+    const [showUpdateGroceryForm, setShowUpdateGroceryForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [showAddGroceryButton, setShowAddGroceryButton] = useState(false);
+
+    const [inputText, setInputText] = useState("");
 
     // Create new log, tied to specific user (logs component)
     const handleNewGrocerySubmit = (name, image, quantity) => {
@@ -73,14 +77,14 @@ function App() {
         setShowAddGroceryForm(!showAddGroceryForm);
     };
 
+    const toggleShowUpdateGroceryForm = (event) => {
+        setIsEditing(!isEditing);
+        // setShowUpdateGroceryForm(!setAllGroceries);
+    };
+
     const toggleIsEditing = (event, id) => {
         console.log("edit button gets to me" + id);
-        // setIsEditing(!isEditing);
-
-        axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery/" + id).then((response) => {
-            console.log("test");
-            setIsEditing(!isEditing);
-        });
+        setIsEditing(!isEditing);
     };
 
     const updateQuantity = (id, newQuantity) => {
@@ -90,6 +94,28 @@ function App() {
         mutationUpdateGrocery.mutate({ id, quantity: newQuantity });
     };
 
+    /* -------------------------------------------------------------------------- */
+    /*                               SearchBar CODE                               */
+    /* -------------------------------------------------------------------------- */
+
+    const handleSearchInput = (event) => {
+        let lowerCase = event.target.value.toLowerCase();
+        setInputText(lowerCase);
+        console.log(lowerCase);
+    };
+
+    const filteredData = allGroceries.filter((x) => {
+        //if no input the return the original
+        if (inputText === "") {
+            return x;
+        }
+        //return the item which contains the user input
+        else {
+            return x.name.toLowerCase().includes(inputText);
+        }
+    });
+
+    /* -------------------------- END OF SEARCHBAR CODE ------------------------- */
     useEffect(() => {
         axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
             setAllGroceries(response.data);
@@ -99,7 +125,10 @@ function App() {
 
     return (
         <>
-            <h1>Hello World</h1>
+            <h1>Stocked.IO</h1>
+
+            <input class="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
+
             {showAddGroceryForm === false ? (
                 <button className="button" onClick={toggleShowAddGroceryForm}>
                     Add New Grocery Item
@@ -110,7 +139,7 @@ function App() {
 
             <main>
                 <section className="cardContainer">
-                    {allGroceries.map((grocery, index) => {
+                    {filteredData.map((grocery, index) => {
                         return (
                             <div key={index}>
                                 {isEditing === false ? (
@@ -150,40 +179,15 @@ function App() {
                                     </div>
                                 ) : (
                                     <>
-                                        <EditGrocery className="editForm" index={index} allGroceries={allGroceries[index]} handleUpdateGrocery={handleUpdateGrocery} selectedGrocery={selectedGrocery} />
                                         <div className="card">
-                                            <div className="cardImage">
-                                                <img className="imgFit" src={grocery.image} alt=""></img>
-                                            </div>
-                                            <div className="cardBody">
-                                                <p className="cardTitle">{grocery.name}</p>
-                                                <p className="cardDescription">Quantity: {grocery.quantity}</p>
-                                                <div className="cardActions">
-                                                    <button className="button" onClick={() => updateQuantity(grocery.id, grocery.quantity + 1)}>
-                                                        Add
-                                                    </button>
-                                                    <button className="button" onClick={() => updateQuantity(grocery.id, grocery.quantity - 1)}>
-                                                        Subtract
-                                                    </button>
-                                                </div>
-                                                <button
-                                                    onClick={() => {
-                                                        handleGroceryDelete(grocery.id);
-                                                    }}
-                                                >
-                                                    DELETE
-                                                </button>
-                                                <button
-                                                    onClick={(event) => {
-                                                        toggleIsEditing(event, grocery.id);
-                                                    }}
-                                                    // onClick={(event) => {
-                                                    //     handleGrocerySelect(grocery);
-                                                    // }}
-                                                >
-                                                    EDIT
-                                                </button>
-                                            </div>
+                                            <EditGrocery
+                                                className="editForm"
+                                                index={index}
+                                                allGroceries={allGroceries[index]}
+                                                handleUpdateGrocery={handleUpdateGrocery}
+                                                selectedGrocery={selectedGrocery}
+                                                toggleShowUpdateGroceryForm={toggleShowUpdateGroceryForm}
+                                            />
                                         </div>
                                     </>
                                 )}

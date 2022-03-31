@@ -31,6 +31,7 @@ const AddGrocery = (props) => {
 
     const handleFormHide = (event) => {
         event.preventDefault();
+        console.log("cancel button from addForm");
         props.toggleShowAddGroceryForm(event);
     };
 
@@ -71,7 +72,7 @@ const AddGrocery = (props) => {
                         </div>
                     </div>
 
-                    <div className="fiel"></div>
+                    <div className="field"></div>
                 </form>
             </section>
         </div>

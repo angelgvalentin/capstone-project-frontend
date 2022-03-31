@@ -145,7 +145,7 @@ main {
 }
 
 #editForm {
-    display: none;
+    display: block;
 }
 @media (max-width: 600px) {
     .cardBody {

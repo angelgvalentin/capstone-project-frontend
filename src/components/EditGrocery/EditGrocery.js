@@ -21,7 +21,7 @@ const EditGrocery = (props) => {
     };
 
     const handleNewQuantity = (event) => {
-        // console.log(props.allGroceries);
+        console.log(props.allGroceries);
         setNewQuantity(event.target.value);
     };
 
@@ -32,6 +32,7 @@ const EditGrocery = (props) => {
         props.handleUpdateGrocery(name, image, quantity, props.allGroceries.id);
         // document.getElementById("addForm").reset();
         // toggleEdit();
+        handleEditFormHide(event);
     };
 
     // Clear log selected state so display window closes, pass state up to App.js
@@ -57,8 +58,9 @@ const EditGrocery = (props) => {
     //     // toggleEdit();
     // };
 
-    const handleFormHide = (event) => {
+    const handleEditFormHide = (event) => {
         event.preventDefault();
+        console.log("Cancel button is working");
         props.toggleShowUpdateGroceryForm(event);
     };
 
@@ -93,7 +95,7 @@ const EditGrocery = (props) => {
                         </div>
 
                         <div className="control">
-                            <button className="button is-info" onClick={handleFormHide}>
+                            <button className="button is-info" onClick={handleEditFormHide}>
                                 Cancel
                             </button>
                         </div>
