@@ -54,6 +54,40 @@ function App() {
             });
     };
 
+    const handleAddQuantity = (id, quantity, name, image) => {
+        axios
+            .put(`https://agile-shelf-33236.herokuapp.com/api/v1/grocery/${id}`, {
+                name: name,
+                image: image,
+                quantity: quantity,
+            })
+            .then((response) => {
+                setSelectedGrocery(response.data);
+                axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
+                    setAllGroceries(response.data);
+                });
+            });
+    };
+
+    const handleSubtrackQuantity = (id, quantity, name, image) => {
+        axios
+            .put(`https://agile-shelf-33236.herokuapp.com/api/v1/grocery/${id}`, {
+                name: name,
+                image: image,
+                quantity: quantity,
+            })
+
+            .then((response) => {
+                console.log(id);
+                setSelectedGrocery(response.data);
+                axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
+                    setAllGroceries(response.data);
+                });
+                console.log("this is minus button");
+                console.log(response.data);
+            });
+    };
+
     const mutationUpdateGrocery = handleUpdateGrocery();
 
     // Delete selected grocery, and clear display log view (details component)
@@ -87,12 +121,12 @@ function App() {
         setIsEditing(!isEditing);
     };
 
-    const updateQuantity = (id, newQuantity) => {
-        if (newQuantity < 0) {
-            return;
-        }
-        mutationUpdateGrocery.mutate({ id, quantity: newQuantity });
-    };
+    // const updateQuantity = (id, newQuantity) => {
+    //     if (newQuantity < 0) {
+    //         return;
+    //     }
+    //     mutationUpdateGrocery.mutate({ id, quantity: newQuantity });
+    // };
 
     /* -------------------------------------------------------------------------- */
     /*                               SearchBar CODE                               */
@@ -127,15 +161,19 @@ function App() {
         <>
             <h1>Stocked.IO</h1>
 
-            <input class="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
+            <div className="searchBar">
+                <input id="input" className="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
+            </div>
 
-            {showAddGroceryForm === false ? (
-                <button className="button" onClick={toggleShowAddGroceryForm}>
-                    Add New Grocery Item
-                </button>
-            ) : (
-                <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />
-            )}
+            <div className="searchBar">
+                {showAddGroceryForm === false ? (
+                    <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
+                        Add New Grocery Item
+                    </button>
+                ) : (
+                    <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />
+                )}
+            </div>
 
             <main>
                 <section className="cardContainer">
@@ -151,10 +189,10 @@ function App() {
                                             <p className="cardTitle">{grocery.name}</p>
                                             <p className="cardDescription">Quantity: {grocery.quantity}</p>
                                             <div className="cardActions">
-                                                <button className="button" onClick={() => updateQuantity(grocery.id, grocery.quantity + 1)}>
+                                                <button className="button" onClick={() => handleAddQuantity(grocery.id, grocery.quantity + 1, grocery.name, grocery.image)}>
                                                     Add
                                                 </button>
-                                                <button className="button" onClick={() => updateQuantity(grocery.id, grocery.quantity - 1)}>
+                                                <button className="button" onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity - 1, grocery.name, grocery.image)}>
                                                     Subtract
                                                 </button>
                                             </div>
