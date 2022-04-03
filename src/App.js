@@ -152,6 +152,7 @@ function App() {
     /* -------------------------- END OF SEARCHBAR CODE ------------------------- */
     useEffect(() => {
         axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
+            console.log("this is from useEffect " + response.data.sort());
             setAllGroceries(response.data);
             // console.log(allGroceries);
         });
@@ -177,7 +178,7 @@ function App() {
 
             <main>
                 <section className="cardContainer">
-                    {filteredData.map((grocery, index) => {
+                    {filteredData.sort().map((grocery, index) => {
                         return (
                             <div key={index}>
                                 {isEditing === false ? (
@@ -189,30 +190,32 @@ function App() {
                                             <p className="cardTitle">{grocery.name}</p>
                                             <p className="cardDescription">Quantity: {grocery.quantity}</p>
                                             <div className="cardActions">
-                                                <button className="button" onClick={() => handleAddQuantity(grocery.id, grocery.quantity + 1, grocery.name, grocery.image)}>
-                                                    Add
+                                                <button onClick={() => handleAddQuantity(grocery.id, grocery.quantity + 1, grocery.name, grocery.image)}>
+                                                    <i class="fa-solid fa-plus"></i>
                                                 </button>
-                                                <button className="button" onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity - 1, grocery.name, grocery.image)}>
-                                                    Subtract
+                                                <button onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity - 1, grocery.name, grocery.image)}>
+                                                    <i class="fa-solid fa-minus"></i>
                                                 </button>
                                             </div>
-                                            <button
-                                                onClick={() => {
-                                                    handleGroceryDelete(grocery.id);
-                                                }}
-                                            >
-                                                DELETE
-                                            </button>
-                                            <button
-                                                onClick={(event) => {
-                                                    toggleIsEditing(event, grocery.id);
-                                                }}
-                                                // onClick={(event) => {
-                                                //     handleGrocerySelect(grocery);
-                                                // }}
-                                            >
-                                                EDIT
-                                            </button>
+                                            <div className="cardActions">
+                                                <button
+                                                    onClick={() => {
+                                                        handleGroceryDelete(grocery.id);
+                                                    }}
+                                                >
+                                                    DELETE
+                                                </button>
+                                                <button
+                                                    onClick={(event) => {
+                                                        toggleIsEditing(event, grocery.id);
+                                                    }}
+                                                    // onClick={(event) => {
+                                                    //     handleGrocerySelect(grocery);
+                                                    // }}
+                                                >
+                                                    EDIT
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (
