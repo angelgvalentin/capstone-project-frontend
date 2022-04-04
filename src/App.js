@@ -177,14 +177,15 @@ function App() {
 
             <nav>
                 <div className="searchBar">
-                    <input id="input" className="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
-                </div>
-
-                <div className="searchBar">
                     {showAddGroceryForm === false ? (
-                        <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
+                        <>
+                            <div className="searchBar">
+                                <input id="input" className="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
+                            </div>
+                            <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </>
                     ) : (
                         <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />
                     )}

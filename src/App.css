@@ -160,15 +160,19 @@ nav {
     padding: 10px;
 }
 
+#submitBtn {
+    background-color: #4caf50;
+}
+
 #addForm {
     display: block;
     width: 400px;
 }
 
-#submitBtn {
+/* #submitBtn {
     display: flex !important;
     align-items: center !important;
-}
+} */
 
 #editForm {
     display: block;
@@ -241,6 +245,10 @@ nav {
         font-size: 0.9em;
         padding: 19px;
     }
+
+    .formContainer {
+        width: 329px;
+    }
 }
 
 /* MODAL STYLES  Below*/
@@ -273,10 +281,11 @@ button:hover {
 }
 
 /*set extra style for the cancel button*/
-.cancelbtn {
+#cancelbtn {
     width: auto;
     padding: 10px 18px;
-    background-color: #f44336;
+    background-color: #4caf50;
+    margin-bottom: 0;
 }
 
 /*centre the display image inside the container*/

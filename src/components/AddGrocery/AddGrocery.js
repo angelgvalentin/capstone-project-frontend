@@ -61,12 +61,12 @@ const AddGrocery = (props) => {
                     </div>
 
                     <div className="field is-grouped">
-                        <div id="submitBtn" className="control">
-                            <input className="button is-info" type="submit"></input>
+                        <div className="control">
+                            <input id="submitBtn" className="button is-info" type="submit"></input>
                         </div>
 
                         <div className="control">
-                            <button className="button is-info" onClick={handleFormHide}>
+                            <button id="cancelbtn" className="button is-info" onClick={handleFormHide}>
                                 Cancel
                             </button>
                         </div>
