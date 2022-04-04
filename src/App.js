@@ -171,7 +171,9 @@ function App() {
 
     return (
         <>
-            {/* <h1>Stocked.IO</h1> */}
+            <div id="header">
+                <img className="logo" src="./GottaGitIt_Logo.png" alt="" />
+            </div>
 
             <nav>
                 <div className="searchBar">
@@ -181,7 +183,7 @@ function App() {
                 <div className="searchBar">
                     {showAddGroceryForm === false ? (
                         <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
-                            Add New Grocery Item
+                            <i class="fa-solid fa-plus"></i>
                         </button>
                     ) : (
                         <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />

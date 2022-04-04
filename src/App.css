@@ -31,7 +31,13 @@ main {
     justify-content: center;
 }
 
+#header {
+    height: 71px;
+    background: black !important;
+}
+
 nav {
+    padding: 10px 0;
     background-color: rgb(0, 0, 0);
 }
 
@@ -127,7 +133,7 @@ nav {
     border-radius: 4em;
     left: 0;
     top: 0;
-    width: 300px;
+
     height: 100%;
     opacity: 0;
     transition: all 0.3s;
@@ -171,14 +177,28 @@ nav {
 .searchBar {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    width: 320px;
 }
 
 #input {
-    width: 300px;
+    width: 165px;
+    margin-right: 8px;
 }
 
 #addBtn {
-    width: 300px;
+    width: 165px;
+    margin: 0;
+    font-size: 0.9em;
+    padding: 19px;
 }
 
 @media (max-width: 600px) {
@@ -200,6 +220,26 @@ nav {
 
     .cardDescription {
         font-size: 15px;
+    }
+
+    #header {
+        background: black !important;
+    }
+
+    .logo {
+        width: 320px;
+    }
+
+    #input {
+        width: 165px;
+        margin-right: 8px;
+    }
+
+    #addBtn {
+        width: 165px;
+        margin: 0;
+        font-size: 0.9em;
+        padding: 19px;
     }
 }
 
