@@ -91,7 +91,7 @@ const EditGrocery = (props) => {
 
                     <div className="field is-grouped">
                         <div className="control">
-                            <input id="submitBtn" className="button is-info" type="submit"></input>
+                            <input id="submitBtn2" className="button is-info" type="submit"></input>
                         </div>
 
                         <div className="control">
@@ -100,8 +100,6 @@ const EditGrocery = (props) => {
                             </button>
                         </div>
                     </div>
-
-                    <div className="field"></div>
                 </form>
             </section>
         </div>

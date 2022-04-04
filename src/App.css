@@ -107,10 +107,10 @@ nav {
     position: relative;
     background-color: rgb(255, 255, 255);
     border-radius: 4em;
-    font-size: 16px;
+    font-size: 12px;
     color: rgb(0, 0, 0);
     font-weight: 500;
-    padding: 0.4em 0.8em;
+    padding: 2px 8px;
     cursor: pointer;
     user-select: none;
     text-align: center;
@@ -157,15 +157,26 @@ nav {
 .formContainer {
     display: flex;
     justify-content: center;
-    padding: 10px;
+}
+
+.label:not(:last-child) {
+    margin-bottom: 0;
 }
 
 #submitBtn {
     background-color: #4caf50;
 }
+#submitBtn2 {
+    background-color: #4caf50;
+}
+
+.control {
+    margin-right: 5px;
+}
 
 #addForm {
     display: block;
+    text-align: left;
     width: 400px;
 }
 
@@ -176,6 +187,8 @@ nav {
 
 #editForm {
     display: block;
+    width: 187px;
+    text-align: left;
 }
 
 .searchBar {
@@ -191,6 +204,7 @@ nav {
 
 .logo {
     width: 320px;
+    text-align: center;
 }
 
 #input {
@@ -249,6 +263,10 @@ nav {
     .formContainer {
         width: 329px;
     }
+
+    #editForm {
+        width: 297px;
+    }
 }
 
 /* MODAL STYLES  Below*/
@@ -258,7 +276,7 @@ input[type="text"],
 input[type="password"] {
     width: 100%;
     padding: 12px 20px;
-    margin: 8px 0;
+
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;

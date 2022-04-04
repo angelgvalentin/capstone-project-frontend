@@ -239,16 +239,14 @@ function App() {
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="card">
-                                            <EditGrocery
-                                                className="editForm"
-                                                index={index}
-                                                allGroceries={allGroceries[index]}
-                                                handleUpdateGrocery={handleUpdateGrocery}
-                                                selectedGrocery={selectedGrocery}
-                                                toggleShowUpdateGroceryForm={toggleShowUpdateGroceryForm}
-                                            />
-                                        </div>
+                                        <EditGrocery
+                                            className="editForm"
+                                            index={index}
+                                            allGroceries={allGroceries[index]}
+                                            handleUpdateGrocery={handleUpdateGrocery}
+                                            selectedGrocery={selectedGrocery}
+                                            toggleShowUpdateGroceryForm={toggleShowUpdateGroceryForm}
+                                        />
                                     </>
                                 )}
                             </div>
