@@ -79,12 +79,14 @@ nav {
 }
 
 .cardTitle {
+    text-align: left;
     font-size: 25px;
     font-weight: 600;
     margin-top: 0px;
 }
 
 .cardDescription {
+    text-align: left;
     font-size: 15px;
     font-weight: 600;
     line-height: 1.6;
@@ -191,6 +193,13 @@ nav {
     .card {
         flex-direction: row;
         width: 312px;
+    }
+    .cardTitle {
+        font-size: 18px;
+    }
+
+    .cardDescription {
+        font-size: 15px;
     }
 }
 

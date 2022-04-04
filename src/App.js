@@ -201,15 +201,18 @@ function App() {
                                         </div>
                                         <div className="cardBody">
                                             <p className="cardTitle">{grocery.name}</p>
-                                            <p className="cardDescription">Quantity: {grocery.quantity}</p>
-                                            <div className="cardActions">
-                                                <button onClick={() => handleAddQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>
-                                                <button onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </button>
+                                            <div>
+                                                <p className="cardDescription">Quantity: {grocery.quantity}</p>
+                                                <div className="cardActions">
+                                                    <button onClick={() => handleAddQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </button>
+                                                    <button onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </button>
+                                                </div>
                                             </div>
+
                                             <div className="cardActions">
                                                 <button
                                                     onClick={() => {
