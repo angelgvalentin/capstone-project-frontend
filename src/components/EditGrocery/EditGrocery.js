@@ -8,7 +8,7 @@ const EditGrocery = (props) => {
     const [image, setNewImage] = useState(props.allGroceries.image);
     const [quantity, setNewQuantity] = useState(props.allGroceries.quantity);
 
-    console.log(props.allGroceries.id);
+    // console.log(props.allGroceries.id);
 
     /* --------------------------- FORM EVENT HANDLERS -------------------------- */
 
@@ -21,7 +21,7 @@ const EditGrocery = (props) => {
     };
 
     const handleNewQuantity = (event) => {
-        console.log(props.allGroceries);
+        // console.log(props.allGroceries);
         setNewQuantity(event.target.value);
     };
 

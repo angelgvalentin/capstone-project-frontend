@@ -59,7 +59,7 @@ function App() {
             .put(`https://agile-shelf-33236.herokuapp.com/api/v1/grocery/${id}`, {
                 name: name,
                 image: image,
-                quantity: quantity,
+                quantity: quantity + 1,
             })
             .then((response) => {
                 setSelectedGrocery(response.data);
@@ -69,23 +69,32 @@ function App() {
             });
     };
 
-    const handleSubtrackQuantity = (id, quantity, name, image) => {
-        axios
-            .put(`https://agile-shelf-33236.herokuapp.com/api/v1/grocery/${id}`, {
-                name: name,
-                image: image,
-                quantity: quantity,
-            })
+    //  ! Playing around with the idea of having the font color of the item name turn red when quantity is zero. So far no dice.
+    // const outOfStockRed = () => {
+    //     document.getElementById("cardTitle").style.color = "red";
+    // };
 
-            .then((response) => {
-                console.log(id);
-                setSelectedGrocery(response.data);
-                axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
-                    setAllGroceries(response.data);
+    const handleSubtrackQuantity = (id, quantity, name, image) => {
+        if (quantity > 0) {
+            axios
+                .put(`https://agile-shelf-33236.herokuapp.com/api/v1/grocery/${id}`, {
+                    name: name,
+                    image: image,
+                    quantity: quantity - 1,
+                })
+
+                .then((response) => {
+                    // console.log(id);
+                    setSelectedGrocery(response.data);
+                    axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
+                        setAllGroceries(response.data);
+                    });
+                    console.log("this is minus button");
+                    // console.log(response.data);
                 });
-                console.log("this is minus button");
-                console.log(response.data);
-            });
+        } else {
+            return (quantity = 0);
+        }
     };
 
     const mutationUpdateGrocery = handleUpdateGrocery();
@@ -111,13 +120,13 @@ function App() {
         setShowAddGroceryForm(!showAddGroceryForm);
     };
 
-    const toggleShowUpdateGroceryForm = (event) => {
+    const toggleShowUpdateGroceryForm = (event, id) => {
         setIsEditing(!isEditing);
         // setShowUpdateGroceryForm(!setAllGroceries);
     };
 
     const toggleIsEditing = (event, id) => {
-        console.log("edit button gets to me" + id);
+        console.log("the id of the card being edited is " + id);
         setIsEditing(!isEditing);
     };
 
@@ -135,10 +144,13 @@ function App() {
     const handleSearchInput = (event) => {
         let lowerCase = event.target.value.toLowerCase();
         setInputText(lowerCase);
-        console.log(lowerCase);
+        // console.log(lowerCase);
     };
 
-    const filteredData = allGroceries.filter((x) => {
+    // * I have to sort the data before I map it. In this case it's being sorted by quantity so the lowest quantity item moves to the top.
+    const sortedGroceries = allGroceries.sort((a, b) => a.quantity - b.quantity);
+
+    const filteredData = sortedGroceries.filter((x) => {
         //if no input the return the original
         if (inputText === "") {
             return x;
@@ -152,7 +164,6 @@ function App() {
     /* -------------------------- END OF SEARCHBAR CODE ------------------------- */
     useEffect(() => {
         axios.get("https://agile-shelf-33236.herokuapp.com/api/v1/grocery").then((response) => {
-            console.log("this is from useEffect " + response.data.sort());
             setAllGroceries(response.data);
             // console.log(allGroceries);
         });
@@ -160,25 +171,27 @@ function App() {
 
     return (
         <>
-            <h1>Stocked.IO</h1>
+            {/* <h1>Stocked.IO</h1> */}
 
-            <div className="searchBar">
-                <input id="input" className="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
-            </div>
+            <nav>
+                <div className="searchBar">
+                    <input id="input" className="input is-rounded" type="text" placeholder="Search" onChange={handleSearchInput} />
+                </div>
 
-            <div className="searchBar">
-                {showAddGroceryForm === false ? (
-                    <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
-                        Add New Grocery Item
-                    </button>
-                ) : (
-                    <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />
-                )}
-            </div>
+                <div className="searchBar">
+                    {showAddGroceryForm === false ? (
+                        <button id="addBtn" className="button" onClick={toggleShowAddGroceryForm}>
+                            Add New Grocery Item
+                        </button>
+                    ) : (
+                        <AddGrocery handleNewGrocerySubmit={handleNewGrocerySubmit} toggleShowAddGroceryForm={toggleShowAddGroceryForm} />
+                    )}
+                </div>
+            </nav>
 
             <main>
                 <section className="cardContainer">
-                    {filteredData.sort().map((grocery, index) => {
+                    {filteredData.map((grocery, index) => {
                         return (
                             <div key={index}>
                                 {isEditing === false ? (
@@ -190,10 +203,10 @@ function App() {
                                             <p className="cardTitle">{grocery.name}</p>
                                             <p className="cardDescription">Quantity: {grocery.quantity}</p>
                                             <div className="cardActions">
-                                                <button onClick={() => handleAddQuantity(grocery.id, grocery.quantity + 1, grocery.name, grocery.image)}>
+                                                <button onClick={() => handleAddQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
                                                     <i class="fa-solid fa-plus"></i>
                                                 </button>
-                                                <button onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity - 1, grocery.name, grocery.image)}>
+                                                <button onClick={() => handleSubtrackQuantity(grocery.id, grocery.quantity, grocery.name, grocery.image)}>
                                                     <i class="fa-solid fa-minus"></i>
                                                 </button>
                                             </div>

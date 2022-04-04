@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    background-color: rgb(101, 101, 101);
+    background-color: rgb(49, 161, 88);
     /* background: linear-gradient(161deg, rgba(0, 0, 0, 0.665703781512605) 24%, rgba(111, 111, 111, 0.6881127450980392) 82%); */
     color: white;
     font-family: "Roboto", sans-serif;
@@ -31,9 +31,14 @@ main {
     justify-content: center;
 }
 
+nav {
+    background-color: rgb(0, 0, 0);
+}
+
 .cardContainer {
+    margin-top: 10px;
     display: flex;
-    max-width: 1200px;
+    max-width: 700px;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
