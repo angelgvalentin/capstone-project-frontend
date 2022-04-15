@@ -125,9 +125,12 @@ function App() {
         // setShowUpdateGroceryForm(!setAllGroceries);
     };
 
-    const toggleIsEditing = (event, id) => {
-        console.log("the id of the card being edited is " + id);
+    const [selectIndex, setSelectIndex] = useState(0);
+
+    const toggleIsEditing = (index, id) => {
+        console.log("the id of the card being edited is " + id + " and index is " + index);
         setIsEditing(!isEditing);
+        setSelectIndex(index);
     };
 
     // const updateQuantity = (id, newQuantity) => {
@@ -197,7 +200,18 @@ function App() {
                     {filteredData.map((grocery, index) => {
                         return (
                             <div key={index}>
-                                {isEditing === false ? (
+                                {isEditing === true && selectIndex === index ? (
+                                    <>
+                                        <EditGrocery
+                                            className="editForm"
+                                            index={index}
+                                            allGroceries={allGroceries[index]}
+                                            handleUpdateGrocery={handleUpdateGrocery}
+                                            selectedGrocery={selectedGrocery}
+                                            toggleShowUpdateGroceryForm={toggleShowUpdateGroceryForm}
+                                        />
+                                    </>
+                                ) : (
                                     <div className="card">
                                         <div className="cardImage">
                                             <img className="imgFit" src={grocery.image} alt=""></img>
@@ -226,7 +240,7 @@ function App() {
                                                 </button>
                                                 <button
                                                     onClick={(event) => {
-                                                        toggleIsEditing(event, grocery.id);
+                                                        toggleIsEditing(index, grocery.id);
                                                     }}
                                                     // onClick={(event) => {
                                                     //     handleGrocerySelect(grocery);
@@ -237,17 +251,6 @@ function App() {
                                             </div>
                                         </div>
                                     </div>
-                                ) : (
-                                    <>
-                                        <EditGrocery
-                                            className="editForm"
-                                            index={index}
-                                            allGroceries={allGroceries[index]}
-                                            handleUpdateGrocery={handleUpdateGrocery}
-                                            selectedGrocery={selectedGrocery}
-                                            toggleShowUpdateGroceryForm={toggleShowUpdateGroceryForm}
-                                        />
-                                    </>
                                 )}
                             </div>
                         );
